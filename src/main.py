@@ -2,6 +2,11 @@ import sys
 
 import pygame
 from pygame.locals import *
+from image import Image
+from actor import player
+
+width, height = 640, 480
+screen = pygame.display.set_mode((width, height))
 
 if __name__ == '__main__':
 
@@ -10,21 +15,27 @@ if __name__ == '__main__':
     fps = 60
     fpsClock = pygame.time.Clock()
 
-    width, height = 640, 480
-    screen = pygame.display.set_mode((width, height))
+    player = player.Player(200, 300)
 
-    # Game loop.
     while True:
         screen.fill((0, 0, 0))
 
         for event in pygame.event.get():
+            player.capture_events(event)
+
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
 
-    # Update.
+        player.move()
+        player.act()
 
-    # Draw.
+        # Update.
 
-    pygame.display.flip()
-    fpsClock.tick(fps)
+        screen.blit(fireball.image, (200, 200))
+        player.draw()
+
+        # Draw.
+
+        pygame.display.flip()
+        fpsClock.tick(fps)
