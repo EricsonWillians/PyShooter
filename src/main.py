@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
         # Update.
 
-        screen.blit(fireball.image, (200, 200))
+        # screen.blit(fireball.image, (200, 200))
         player.draw()
 
         # Draw.
