@@ -2,6 +2,7 @@ import pygame
 from image import Image
 from actor import bullet
 from main import screen
+import time
 
 
 class Player:
@@ -11,11 +12,11 @@ class Player:
         self.y = y
         self.speed = 4
         self.turning_speed = 2.4
-        self.image = Image('assets/python_logo.png').image
+        self.image = Image('assets/player.png').image
         self.transformed_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.angle = 360
+        self.angle = -90
         self.directions = {
             'UP': False,
             'DOWN': False,
@@ -27,15 +28,19 @@ class Player:
             'TURNING_RIGHT': False,
             'SHOOTING': False
         }
-        self.ammo = 4
+        self.start_time = pygame.time.get_ticks()
+        self.ammo = 999
         self.clip = []
         self.reload_clip()
+        self.last_shot = pygame.time.get_ticks()
+        self.weapon_cooldown = 300
 
     def draw(self):
         self.update()
         screen.blit(self.transformed_image, self.rect)
         for bullet in self.clip:
-            bullet.draw()
+            if bullet.discharged:
+                bullet.draw()
 
     def update(self):
         self.transformed_image = pygame.transform.rotate(
@@ -86,6 +91,10 @@ class Player:
         if self.directions['DOWN']:
             self.y += self.speed
         self.rect.center = (self.x, self.y)
+        for bullet in self.clip:
+            if not bullet.discharged:
+                bullet.set_pos(self.x, self.y)
+                bullet.set_angle(self.angle)
 
     def act(self):
         if self.actions['TURNING_LEFT']:
@@ -94,11 +103,18 @@ class Player:
             self.angle -= self.turning_speed % 360
         if self.actions['SHOOTING']:
             self.shoot()
+        if abs(self.angle) > 360:
+            self.angle = 0
+        print(self.angle)
 
     def shoot(self):
-        if self.clip:
-            bullet = self.clip.pop()
+        for bullet in self.clip:
+            if not bullet.discharged:
+                now = pygame.time.get_ticks()
+                if now - self.last_shot > self.weapon_cooldown:
+                    self.last_shot = now
+                    bullet.discharged = True
 
     def reload_clip(self):
         self.clip = [
-            bullet.Bullet(self.x, self.y) for n in range(self.ammo)]
+            bullet.Bullet(self.x, self.y, self.angle) for n in range(self.ammo)]
