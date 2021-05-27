@@ -98,8 +98,8 @@ class Player:
                 self.actions['SHOOTING'] = False
         if event.type == pygame.MOUSEMOTION:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            x = mouse_x - self.x
-            y = mouse_y - self.y
+            x = mouse_x - (self.x + self.rect.width / 3)
+            y = mouse_y - (self.y - self.rect.height / 3)
             self.angle = ((180 / pi) * (-atan2(-x, y))) + 90
 
     def move(self):
