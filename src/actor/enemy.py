@@ -16,7 +16,7 @@ class Enemy:
         self.transformed_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.angle = -90
+        self.angle = 90
         self.directions = {
             'UP': False,
             'DOWN': False,

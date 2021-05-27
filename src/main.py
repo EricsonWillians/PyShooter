@@ -18,11 +18,11 @@ if __name__ == '__main__':
     fps = 60
     fps_clock = pygame.time.Clock()
 
-    player = player.Player(200, 300)
+    player = player.Player(width / 2, height / 2)
     enemy = enemy.Enemy(400, 100)
 
     while True:
-        screen.fill((0, 0, 0))
+        screen.fill((50, 50, 50))
 
         for event in pygame.event.get():
             player.capture_events(event)
