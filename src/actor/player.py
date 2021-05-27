@@ -10,7 +10,9 @@ class Player:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.speed = 4
+        self.initial_speed = 4
+        self.speed = self.initial_speed
+        self.running_speed = 6
         self.turning_speed = 2.4
         self.image = Image('assets/player.png').image
         self.transformed_image = self.image
@@ -26,7 +28,8 @@ class Player:
         self.actions = {
             'TURNING_LEFT': False,
             'TURNING_RIGHT': False,
-            'SHOOTING': False
+            'SHOOTING': False,
+            'RUNNING': False
         }
         self.start_time = pygame.time.get_ticks()
         self.ammo = 999
@@ -65,6 +68,8 @@ class Player:
                 self.actions['TURNING_RIGHT'] = True
             if event.key == pygame.K_UP:
                 self.actions['SHOOTING'] = True
+            if event.key == pygame.K_LSHIFT:
+                self.actions['RUNNING'] = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 self.directions['LEFT'] = False
@@ -80,6 +85,8 @@ class Player:
                 self.actions['TURNING_RIGHT'] = False
             if event.key == pygame.K_UP:
                 self.actions['SHOOTING'] = False
+            if event.key == pygame.K_LSHIFT:
+                self.actions['RUNNING'] = False
 
     def move(self):
         if self.directions['LEFT']:
@@ -103,6 +110,10 @@ class Player:
             self.angle -= self.turning_speed % 360
         if self.actions['SHOOTING']:
             self.shoot()
+        if self.actions['RUNNING']:
+            self.speed = self.running_speed
+        else:
+            self.speed = self.initial_speed
         if abs(self.angle) > 360:
             self.angle = 0
 
