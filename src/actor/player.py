@@ -2,6 +2,7 @@ import pygame
 from image import Image
 from actor import bullet
 from main import screen
+from math import atan2, pi
 import time
 
 
@@ -66,7 +67,7 @@ class Player:
                 self.actions['TURNING_LEFT'] = True
             if event.key == pygame.K_RIGHT:
                 self.actions['TURNING_RIGHT'] = True
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_SPACE:
                 self.actions['SHOOTING'] = True
             if event.key == pygame.K_LSHIFT:
                 self.actions['RUNNING'] = True
@@ -83,10 +84,23 @@ class Player:
                 self.actions['TURNING_LEFT'] = False
             if event.key == pygame.K_RIGHT:
                 self.actions['TURNING_RIGHT'] = False
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_UP or event.key == pygame.K_SPACE:
                 self.actions['SHOOTING'] = False
             if event.key == pygame.K_LSHIFT:
                 self.actions['RUNNING'] = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            left_mouse_button = pygame.mouse.get_pressed()[0]
+            if left_mouse_button:
+                self.actions['SHOOTING'] = True
+        if event.type == pygame.MOUSEBUTTONUP:
+            left_mouse_button = pygame.mouse.get_pressed()[0]
+            if not left_mouse_button:
+                self.actions['SHOOTING'] = False
+        if event.type == pygame.MOUSEMOTION:
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            x = mouse_x - self.x
+            y = mouse_y - self.y
+            self.angle = ((180 / pi) * (-atan2(-x, y))) + 90
 
     def move(self):
         if self.directions['LEFT']:
