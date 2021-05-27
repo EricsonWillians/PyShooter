@@ -93,7 +93,7 @@ class Player:
         self.rect.center = (self.x, self.y)
         for bullet in self.clip:
             if not bullet.discharged:
-                bullet.set_pos(self.x, self.y)
+                bullet.set_pos(self.x + self.rect.width / 3, self.y - self.rect.height / 3)
                 bullet.set_angle(self.angle)
 
     def act(self):
@@ -105,7 +105,6 @@ class Player:
             self.shoot()
         if abs(self.angle) > 360:
             self.angle = 0
-        print(self.angle)
 
     def shoot(self):
         for bullet in self.clip:

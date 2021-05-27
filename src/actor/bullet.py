@@ -6,14 +6,14 @@ from main import screen
 
 class Bullet:
 
-    WIDTH = 8
-    HEIGHT = 8
+    WIDTH = 4
+    HEIGHT = 4
 
     def __init__(self, x, y, angle):
         self.x = x
         self.y = y
         self.angle = angle
-        self.speed = 12
+        self.speed = 24
         self.image = Image('assets/fireball.png',
                            Bullet.WIDTH, Bullet.HEIGHT).image
         self.rect = self.image.get_rect()
