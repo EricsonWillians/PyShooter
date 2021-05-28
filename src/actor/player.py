@@ -98,6 +98,7 @@ class Player:
                 self.actions['SHOOTING'] = False
         if event.type == pygame.MOUSEMOTION:
             mouse_x, mouse_y = pygame.mouse.get_pos()
+            print(pygame.mouse.get_pos())
             x = mouse_x - (self.x + self.rect.width / 3)
             y = mouse_y - (self.y - self.rect.height / 3)
             self.angle = ((180 / pi) * (-atan2(-x, y))) + 90
@@ -112,9 +113,12 @@ class Player:
         if self.directions['DOWN']:
             self.y += self.speed
         self.rect.center = (self.x, self.y)
+        self.hand_distance_x = self.rect.width / 3
+        self.hand_distance_y = self.rect.height / 3
         for bullet in self.clip:
             if not bullet.discharged:
-                bullet.set_pos(self.x + self.rect.width / 3, self.y - self.rect.height / 3)
+                # TODO: Adjust bullet position
+                bullet.set_pos(self.x + self.hand_distance_x, self.y - self.hand_distance_y)
                 bullet.set_angle(self.angle)
 
     def act(self):

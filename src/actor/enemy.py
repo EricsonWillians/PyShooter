@@ -1,8 +1,13 @@
 import pygame
 from image import Image
 from actor import bullet
+from enum import Enum
 import main
 import time
+
+
+class EnemyType(Enum):
+    WEAK_ZOMBIE = 0
 
 
 class Enemy:
@@ -30,6 +35,7 @@ class Enemy:
         }
         self.start_time = pygame.time.get_ticks()
         self.last_shot = pygame.time.get_ticks()
+        self.type = EnemyType.WEAK_ZOMBIE
 
     def draw(self):
         self.update()
