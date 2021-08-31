@@ -8,7 +8,7 @@ from actor import player
 from actor import enemy
 
 monitor = get_monitors()[0]
-width, height = monitor.width, monitor.height
+width, height = int(monitor.width / 2), int(monitor.height / 2)
 screen = pygame.display.set_mode((width, height), DOUBLEBUF)
 
 if __name__ == '__main__':
@@ -36,6 +36,9 @@ if __name__ == '__main__':
 
         player.move()
         player.act()
+        if player.check_bullet_collision(enemy):
+            # print('DEAD!')
+            pass
 
         # Update.
 

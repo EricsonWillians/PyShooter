@@ -39,3 +39,4 @@ class Bullet:
         dy = math.sin(math.radians(self.angle)) * self.speed
 
         self.set_pos(self.x + dx, self.y + dy)
+
