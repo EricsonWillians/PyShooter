@@ -25,7 +25,7 @@ class Bullet:
         screen.blit(self.image, self.rect)
         if self.discharged:
             self.move()
-
+            
     def set_pos(self, x, y):
         self.x = x
         self.y = y
@@ -40,3 +40,5 @@ class Bullet:
 
         self.set_pos(self.x + dx, self.y + dy)
 
+    def destroy(self):
+        self.image.fill((0, 0, 0, 0))

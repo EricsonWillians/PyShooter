@@ -15,7 +15,8 @@ class Player:
         self.speed = self.initial_speed
         self.running_speed = 6
         self.turning_speed = 2.4
-        self.image = Image('assets/player.png').image
+        self.current_weapon = 0
+        self.image = Image('assets/player/player_pistol.png').image
         self.transformed_image = self.image
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
@@ -149,8 +150,6 @@ class Player:
     def check_bullet_collision(self, target):
         for bullet in self.clip:
             if target.rect.contains(bullet.rect):
-                bullet.set_pos(self.x + self.hand_distance_x, self.y - self.hand_distance_y)
-                bullet.set_angle(self.angle)
-                print(bullet.speed)
+                bullet.destroy()
                 return True
         return False
