@@ -3,7 +3,7 @@ from image import Image
 from math import atan2, pi
 import time
 
-from weapon import Pistol
+from weapon import Pistol, Shotgun
 
 class Player:
 
@@ -36,9 +36,10 @@ class Player:
         }
         self.start_time = pygame.time.get_ticks()
         self.health = 100
-        self.current_weapons = [Pistol()]
+        self.current_weapons = [Pistol(), Shotgun()]
         self.selected_weapon = self.PISTOL_SELECTED
-        self.current_weapons[0].reload_clip(self)
+        for weapon in self.current_weapons:
+            weapon.reload_clip(self)
 
     def draw(self, screen):
         self.update()
@@ -71,9 +72,9 @@ class Player:
             if event.key == pygame.K_LSHIFT:
                 self.actions['RUNNING'] = True
             if event.key == pygame.K_1:
-                self.selected_weapon = self.PISTOL_SELECTED
+                self.change_weapon(self.PISTOL_SELECTED)
             if event.key == pygame.K_2:
-                self.selected_weapon = self.SHOTGUN_SELECTED
+                self.change_weapon(self.SHOTGUN_SELECTED)
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 self.directions['LEFT'] = False
@@ -118,6 +119,7 @@ class Player:
         self.hand_distance_x = self.rect.width / 3
         self.hand_distance_y = self.rect.height / 3
         self.current_weapons[self.selected_weapon].update_bullet_pos(self)
+
     def act(self):
         if self.actions['TURNING_LEFT']:
             self.angle += self.turning_speed % 360
@@ -131,3 +133,10 @@ class Player:
             self.speed = self.initial_speed
         if abs(self.angle) > 360:
             self.angle = 0
+
+    def change_weapon(self, weapon: int):
+        self.selected_weapon = weapon
+        if (self.selected_weapon == self.PISTOL_SELECTED):
+            self.image = Image('assets/player/player_pistol.png').image
+        elif (self.selected_weapon == self.SHOTGUN_SELECTED):
+            self.image = Image('assets/player/player_shotgun.png').image

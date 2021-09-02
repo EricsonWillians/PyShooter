@@ -53,4 +53,4 @@ class Shotgun(Weapon):
         Weapon.__init__(self)
         self.damage = 16
         self.ammo = 50
-        self.weapon_cooldown = 300
+        self.weapon_cooldown = 800
