@@ -6,6 +6,7 @@ from screeninfo import get_monitors
 from image import Image
 from actor import player
 from actor import enemy
+from weapon import Weapon
 
 monitor = get_monitors()[0]
 width, height = int(monitor.width / 2), int(monitor.height / 2)
@@ -20,6 +21,7 @@ if __name__ == '__main__':
 
     player = player.Player(width / 2, height / 2)
     enemy = enemy.Enemy(400, 100)
+    weapon = Weapon()
 
     while True:
         screen.fill((50, 50, 50))
@@ -36,14 +38,11 @@ if __name__ == '__main__':
 
         player.move()
         player.act()
-        if player.check_bullet_collision(enemy):
-            # print('DEAD!')
-            pass
-
-        # Update.
+        if weapon.check_bullet_collision(enemy):
+            print('DEAD!')
 
         # screen.blit(fireball.image, (200, 200))
-        player.draw()
+        player.draw(screen)
         enemy.draw()
 
         # Draw.

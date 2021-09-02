@@ -35,6 +35,7 @@ class Enemy:
         }
         self.start_time = pygame.time.get_ticks()
         self.last_shot = pygame.time.get_ticks()
+        self.health = 100
         self.type = EnemyType.WEAK_ZOMBIE
 
     def draw(self):

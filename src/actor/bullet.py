@@ -1,8 +1,6 @@
 import pygame
 import math
 from image import Image
-from main import screen
-
 
 class Bullet:
 
@@ -21,7 +19,7 @@ class Bullet:
         self.discharged = False
         self.hit = False
 
-    def draw(self):
+    def draw(self, screen):
         screen.blit(self.image, self.rect)
         if self.discharged:
             self.move()
