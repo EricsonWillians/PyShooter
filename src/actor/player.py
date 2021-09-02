@@ -7,6 +7,9 @@ from weapon import Pistol
 
 class Player:
 
+    PISTOL_SELECTED = 0
+    SHOTGUN_SELECTED = 1
+
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -33,14 +36,14 @@ class Player:
         }
         self.start_time = pygame.time.get_ticks()
         self.health = 100
-        self.current_weapon = Pistol()
-        self.current_weapon.reload_clip(self)
-        self.last_shot = pygame.time.get_ticks()
+        self.current_weapons = [Pistol()]
+        self.selected_weapon = self.PISTOL_SELECTED
+        self.current_weapons[0].reload_clip(self)
 
     def draw(self, screen):
         self.update()
         screen.blit(self.transformed_image, self.rect)
-        self.current_weapon.draw(screen)
+        self.current_weapons[self.selected_weapon].draw(screen)
 
     def update(self):
         self.transformed_image = pygame.transform.rotate(
@@ -67,6 +70,10 @@ class Player:
                 self.actions['SHOOTING'] = True
             if event.key == pygame.K_LSHIFT:
                 self.actions['RUNNING'] = True
+            if event.key == pygame.K_1:
+                self.selected_weapon = self.PISTOL_SELECTED
+            if event.key == pygame.K_2:
+                self.selected_weapon = self.SHOTGUN_SELECTED
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_a:
                 self.directions['LEFT'] = False
@@ -110,14 +117,14 @@ class Player:
         self.rect.center = (self.x, self.y)
         self.hand_distance_x = self.rect.width / 3
         self.hand_distance_y = self.rect.height / 3
-        self.current_weapon.update_bullet_pos(self)
+        self.current_weapons[self.selected_weapon].update_bullet_pos(self)
     def act(self):
         if self.actions['TURNING_LEFT']:
             self.angle += self.turning_speed % 360
         if self.actions['TURNING_RIGHT']:
             self.angle -= self.turning_speed % 360
         if self.actions['SHOOTING']:
-            self.current_weapon.shoot(self.last_shot)
+            self.current_weapons[self.selected_weapon].shoot()
         if self.actions['RUNNING']:
             self.speed = self.running_speed
         else:

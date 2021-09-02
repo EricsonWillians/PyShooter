@@ -7,6 +7,7 @@ class Weapon:
         self.ammo = 0
         self.damage = 0
         self.weapon_cooldown = 0
+        self.last_shot = pygame.time.get_ticks()
 
     def update_bullet_pos(self, actor):
         for bullet in self.clip:
@@ -26,12 +27,12 @@ class Weapon:
                 return True
         return False
 
-    def shoot(self, last_shot):
+    def shoot(self):
         for bullet in self.clip:
             if not bullet.discharged:
                 now = pygame.time.get_ticks()
-                if now - last_shot > self.weapon_cooldown:
-                    last_shot = now
+                if now - self.last_shot > self.weapon_cooldown:
+                    self.last_shot = now
                     bullet.discharged = True
 
     def draw(self, screen):
@@ -45,7 +46,7 @@ class Pistol(Weapon):
         Weapon.__init__(self)
         self.damage = 8
         self.ammo = 50
-        self.weapon_cooldown = 2000
+        self.weapon_cooldown = 300
 class Shotgun(Weapon):
 
     def __init__(self):
