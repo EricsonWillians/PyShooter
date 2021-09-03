@@ -6,6 +6,7 @@ from screeninfo import get_monitors
 from image import Image
 from actor import player
 from actor import enemy
+from map import Map
 from weapon import Weapon
 
 monitor = get_monitors()[0]
@@ -22,6 +23,8 @@ if __name__ == '__main__':
     player = player.Player(width / 2, height / 2)
     enemy = enemy.Enemy(400, 100)
     weapon = Weapon()
+
+    _map = Map('test_area')
 
     while True:
         screen.fill((50, 50, 50))
@@ -43,7 +46,8 @@ if __name__ == '__main__':
 
         # screen.blit(fireball.image, (200, 200))
         player.draw(screen)
-        enemy.draw()
+        enemy.draw(screen)
+        _map.draw(screen)
 
         # Draw.
 

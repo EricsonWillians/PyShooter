@@ -2,7 +2,6 @@ import pygame
 from image import Image
 from actor import bullet
 from enum import Enum
-import main
 import time
 
 
@@ -38,9 +37,9 @@ class Enemy:
         self.health = 100
         self.type = EnemyType.WEAK_ZOMBIE
 
-    def draw(self):
+    def draw(self, screen):
         self.update()
-        main.screen.blit(self.transformed_image, self.rect)
+        screen.blit(self.transformed_image, self.rect)
 
     def update(self):
         self.transformed_image = pygame.transform.rotate(
