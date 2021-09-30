@@ -25,10 +25,11 @@ if __name__ == '__main__':
     weapon = Weapon()
 
     _map = Map('test_area')
+    
+    
 
     while True:
         screen.fill((50, 50, 50))
-
         for event in pygame.event.get():
             player.capture_events(event)
             if event.type == KEYDOWN:
@@ -45,9 +46,10 @@ if __name__ == '__main__':
             print('DEAD!')
 
         # screen.blit(fireball.image, (200, 200))
+        _map.draw(screen, player)
         player.draw(screen)
         enemy.draw(screen)
-        _map.draw(screen)
+        
 
         # Draw.
 
